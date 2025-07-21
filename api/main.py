@@ -6,7 +6,7 @@ from datetime import datetime
 import os
 import boto3
 
-app = FastAPI(title = "Lagoon API", version = "1.0.0", description = "API for managing Lagoon application")
+app = FastAPI(title = "1agoon API", version = "1.0.0", description = "API for managing 1agoon application")
 
 # middleware (CORS), complicate daw, security and protect
 app.add_middleware(
