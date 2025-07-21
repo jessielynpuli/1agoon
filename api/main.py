@@ -49,6 +49,14 @@ def generate_presigned_url(image_keys: List[str]) -> List[str]:
     return signed_urls
     #checker, every other access, nagbabago yung URL, para di ma-access ng iba. standard practice sa AWS S3
 
+# Include routes
+app.include_router(auth.router)
+app.include_router(users.router)
+app.include_router(stores.router)
+app.include_router(menu.router)
+app.include_router(orders.router)
+
+
 # models/schemas (data models and data validation)
 class UserModel(Model):
     class Meta:
