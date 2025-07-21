@@ -11,7 +11,7 @@ import boto3    #to access AWS through Python Codes
 
 from typing import List #typing module, to declare data types for our models
 
-app = FastAPI(title = "Notes API", version = "1.0.0", description = "API for managing notes")
+app = FastAPI(title = "1agoon API", version = "1.0.0", description = "API for managing 1agoon application")
 
 # middleware (CORS), complicate daw, security and protect
 
