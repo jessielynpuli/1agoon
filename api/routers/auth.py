@@ -1,6 +1,6 @@
 from unittest import result
 from fastapi import APIRouter, HTTPException
-from models.user import UserCreate
+from models.user import UserCreate, UserLogIn
 from utils.supabase import supabase
 
 router = APIRouter(prefix="/auth")
@@ -32,11 +32,15 @@ def signup(user: UserCreate):
     
 
 @router.post("/login")
-def login(email: str, password: str):
+def login(user: UserLogIn):
+    
+    # Authenticate user via Supabase Auth
     result = supabase.auth.sign_in_with_password({
         "email": user.email,
-        "password": user.password,
+        "password": user.password
     })
+
+    #Check if login failed
     if result.get("error"):
         raise HTTPException(status_code=400, detail=result["error"]["message"])
-    return result
+    return {"message": "Login successful"}
