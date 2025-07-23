@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from routers import auth  # Import routers here
 from pydantic import BaseModel
 from typing import List
 from datetime import datetime
@@ -18,14 +19,14 @@ app.add_middleware(
 )
 
 # AWS Configuration (set-up muna to, before models etc)
-S3_BUCKET = os.getenv("S3_BUCKET", "4avatars-sph-bucket")
+# S3_BUCKET = os.getenv("S3_BUCKET", "4avatars-sph-bucket")
 
 # Initialize AWS, uy boto3 pakuha ng sources natin from access keys (basta na set-up na yung naunang dalawa)
-s3 = boto3.client('s3')
+# s3 = boto3.client('s3')
 
 # Include routes
 app.include_router(auth.router)
-app.include_router(users.router)
-app.include_router(stores.router)
-app.include_router(menu.router)
-app.include_router(orders.router)
+# app.include_router(users.router)
+# app.include_router(stores.router)
+# app.include_router(menu.router)
+# app.include_router(orders.router)
