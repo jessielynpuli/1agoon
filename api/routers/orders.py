@@ -1,5 +1,6 @@
 from fastapi import APIRouter
-from utils.supabase import supabase
+from api.models.order import Order
+from api.models.order_item import OrderItem
 
 router = APIRouter(prefix="/orders")
 

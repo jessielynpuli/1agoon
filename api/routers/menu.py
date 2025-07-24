@@ -1,5 +1,6 @@
 from fastapi import APIRouter
-from utils.supabase import supabase
+from api.models.menu_item import MenuItem
+from api.utils.supabase import supabase
 
 router = APIRouter(prefix="/menu")
 
