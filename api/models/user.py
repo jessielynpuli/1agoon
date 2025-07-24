@@ -11,9 +11,9 @@ class User(BaseModel):
     updated_at: str
 
 class UserCreate(BaseModel):
-    username: str
     email: EmailStr
     password: str
+    username: str
 
 class UserLogIn(BaseModel):
     email: EmailStr

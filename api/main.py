@@ -1,9 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import auth  # Import routers here
 from pydantic import BaseModel
 from typing import List
 from datetime import datetime
+
+from routers import auth  # Import routers here
+from utils import supabase
+
 import os
 import boto3
 
@@ -13,7 +16,7 @@ app = FastAPI(title = "1agoon API", version = "1.0.0", description = "API for ma
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # if production, may endpoint na insspecify. Allow all origins, you can specify specific domains if needed
-    allow_credentials=True,
+    allow_credentials= True,
     allow_methods=["*"],  # Allow all methods (GET, POST, PUT, DELETE, etc.)
     allow_headers=["*"],  # Allow all headers
 )
