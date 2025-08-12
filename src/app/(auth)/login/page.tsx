@@ -48,7 +48,7 @@ export default function LoginPage() {
   }
 
   const FormContainer = ({ children }: { children: React.ReactNode }) => (
-    <div className="bg-primary text-primary-foreground p-6 sm:p-8 rounded-3xl shadow-lg w-full">
+    <div className="bg-card text-card-foreground p-6 sm:p-8 rounded-3xl shadow-lg w-full">
         {children}
     </div>
   )
@@ -59,7 +59,7 @@ export default function LoginPage() {
         <Image src="/images/logo.png" alt="Campus Hub Logo" width={100} height={100} />
       </div>
       <h2 className="text-2xl font-bold text-center mb-2 text-foreground"></h2>
-      <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in one app</p>
+      <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in <span className="text-primary">one</span> app</p>
       <FormContainer>
         <Form {...loginForm}>
           <form id="login-form" onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
@@ -70,7 +70,7 @@ export default function LoginPage() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="you@example.com" {...field} className="bg-background text-foreground rounded-full h-12 px-5 border-none" />
+                    <Input placeholder="you@example.com" {...field} className="bg-background text-foreground rounded-full h-12 px-5 border-border" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -88,7 +88,7 @@ export default function LoginPage() {
                             type={passwordVisible ? "text" : "password"}
                             placeholder="••••••••"
                             {...field}
-                            className="bg-background text-foreground rounded-full h-12 px-5 pr-12 border-none"
+                            className="bg-background text-foreground rounded-full h-12 px-5 pr-12 border-border"
                         />
                         </FormControl>
                         <Button
@@ -126,7 +126,7 @@ export default function LoginPage() {
         <Image src="/images/logo.png" alt="Campus Hub Logo" width={100} height={100} />
       </div>
       <h2 className="text-2xl font-bold text-center mb-2 text-foreground"></h2>
-       <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in one app</p>
+       <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in <span className="text-primary">one</span> app</p>
       <FormContainer>
         <Form {...signupForm}>
           <form id="signup-form" onSubmit={signupForm.handleSubmit(onSignup)} className="space-y-4">
@@ -137,7 +137,7 @@ export default function LoginPage() {
                     <FormItem>
                     <FormLabel>Username</FormLabel>
                     <FormControl>
-                        <Input placeholder="your_username" {...field} className="bg-background text-foreground rounded-full h-12 px-5 border-none" />
+                        <Input placeholder="your_username" {...field} className="bg-background text-foreground rounded-full h-12 px-5 border-border" />
                     </FormControl>
                     <FormMessage />
                     </FormItem>
@@ -150,7 +150,7 @@ export default function LoginPage() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="you@example.com" {...field} className="bg-background text-foreground rounded-full h-12 px-5 border-none"/>
+                    <Input placeholder="you@example.com" {...field} className="bg-background text-foreground rounded-full h-12 px-5 border-border"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -168,7 +168,7 @@ export default function LoginPage() {
                             type={passwordVisible ? "text" : "password"}
                             placeholder="••••••••"
                             {...field}
-                            className="bg-background text-foreground rounded-full h-12 px-5 pr-12 border-none"
+                            className="bg-background text-foreground rounded-full h-12 px-5 pr-12 border-border"
                         />
                         </FormControl>
                         <Button
