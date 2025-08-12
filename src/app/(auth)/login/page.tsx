@@ -59,9 +59,6 @@ export default function LoginPage() {
     <>
       <div className="flex flex-col items-center mb-8">
         <Image src="https://placehold.co/150x150.png" alt="1agoon Logo" width={100} height={100} data-ai-hint="logo" />
-        <span className="text-4xl font-bold tracking-[0.2em] text-primary mt-2">
-            1agoon
-        </span>
       </div>
       <h2 className="text-2xl font-bold text-center mb-2 text-foreground"></h2>
       <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in <span className="text-primary font-bold">one</span> app</p>
@@ -129,9 +126,6 @@ export default function LoginPage() {
      <>
       <div className="flex flex-col items-center mb-8">
         <Image src="https://placehold.co/150x150.png" alt="1agoon Logo" width={100} height={100} data-ai-hint="logo" />
-        <span className="text-4xl font-bold tracking-[0.2em] text-primary mt-2">
-            1agoon
-        </span>
       </div>
       <h2 className="text-2xl font-bold text-center mb-2 text-foreground"></h2>
        <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in <span className="text-primary font-bold">one</span> app</p>
