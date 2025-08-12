@@ -59,7 +59,7 @@ export default function LoginPage() {
         <Image src="/images/logo.png" alt="Campus Hub Logo" width={100} height={100} />
       </div>
       <h2 className="text-2xl font-bold text-center mb-2 text-foreground"></h2>
-      <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in <span className="text-primary">one</span> app</p>
+      <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in one app</p>
       <FormContainer>
         <Form {...loginForm}>
           <form id="login-form" onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
@@ -126,7 +126,7 @@ export default function LoginPage() {
         <Image src="/images/logo.png" alt="Campus Hub Logo" width={100} height={100} />
       </div>
       <h2 className="text-2xl font-bold text-center mb-2 text-foreground"></h2>
-       <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in <span className="text-primary">one</span> app</p>
+       <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in one app</p>
       <FormContainer>
         <Form {...signupForm}>
           <form id="signup-form" onSubmit={signupForm.handleSubmit(onSignup)} className="space-y-4">
