@@ -3,7 +3,7 @@
 import React, { useContext, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Home, Package, User, LayoutDashboard, Store, Loader2, LogOut } from 'lucide-react';
+import { Home, Package, User, LayoutDashboard, Building, Loader2, LogOut } from 'lucide-react';
 import { AppContext } from '@/context/app-context';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -47,8 +47,8 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   const SidebarNav = () => (
     <aside className="hidden md:flex flex-col w-64 border-r bg-card p-4">
       <div className="flex items-center gap-3 mb-8 px-2">
-        <Store className="h-8 w-8 text-primary" />
-        <h1 className="text-2xl font-bold font-headline text-foreground">Campus Hub</h1>
+        <Building className="h-8 w-8 text-primary" />
+        <h1 className="text-2xl font-bold font-headline text-primary tracking-wider">lagoon</h1>
       </div>
       <nav className="flex flex-col gap-1">
         {navItems.map((item) => {
