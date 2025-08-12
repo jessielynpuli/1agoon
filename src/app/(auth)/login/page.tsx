@@ -24,13 +24,6 @@ const signupSchema = z.object({
 
 type View = 'login' | 'signup';
 
-const LagoonLogo = () => (
-    <div className="flex flex-col items-center mb-8">
-        <Image src="https://storage.googleapis.com/aai-web-samples/lagoon-logo.png" alt="Lagoon Logo" width={200} height={200} />
-    </div>
-);
-
-
 export default function LoginPage() {
   const context = useContext(AppContext);
   const [view, setView] = useState<View>('login');
@@ -62,7 +55,9 @@ export default function LoginPage() {
 
   const renderLogin = () => (
     <>
-      <LagoonLogo />
+      <div className="flex flex-col items-center mb-8">
+        <Image src="https://storage.googleapis.com/aai-web-samples/logo.png" alt="Lagoon Logo" width={200} height={200} />
+      </div>
       <h2 className="text-xl text-center mb-6 text-primary">Food, Printing, and the Lagoon in one app</h2>
       <FormContainer>
         <Form {...loginForm}>
@@ -126,7 +121,9 @@ export default function LoginPage() {
 
   const renderSignup = () => (
      <>
-      <LagoonLogo />
+      <div className="flex flex-col items-center mb-8">
+        <Image src="https://storage.googleapis.com/aai-web-samples/logo.png" alt="Lagoon Logo" width={200} height={200} />
+      </div>
       <h2 className="text-xl text-center mb-6 text-primary">Food, Printing, and the Lagoon in one app</h2>
       <FormContainer>
         <Form {...signupForm}>
