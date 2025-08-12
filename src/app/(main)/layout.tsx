@@ -48,7 +48,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   const SidebarNav = () => (
     <aside className="hidden md:flex flex-col w-64 bg-card p-4 border-r border-border">
       <div className="flex items-center gap-3 mb-8 px-2">
-         <Image src="https://storage.googleapis.com/aai-web-samples/logo-green.png" alt="Campus Hub Logo" width={150} height={150} />
+         <Image src="/images/logo.png" alt="Campus Hub Logo" width={150} height={150} />
       </div>
       <nav className="flex flex-col gap-1">
         {navItems.map((item) => {

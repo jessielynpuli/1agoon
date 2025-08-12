@@ -56,13 +56,13 @@ export default function LoginPage() {
   const renderLogin = () => (
     <>
       <div className="flex flex-col items-center mb-8">
-        <Image src="https://storage.googleapis.com/aai-web-samples/logo-green-alt.png" alt="Campus Hub Logo" width={100} height={100} />
+        <Image src="/images/logo.png" alt="Campus Hub Logo" width={100} height={100} />
       </div>
-      <h2 className="text-2xl font-bold text-center mb-2 text-foreground">Welcome Back!</h2>
-      <p className="text-muted-foreground text-center mb-6">Food, Printing, and the Lagoon in one app</p>
+      <h2 className="text-2xl font-bold text-center mb-2 text-foreground"></h2>
+      <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in one app</p>
       <FormContainer>
         <Form {...loginForm}>
-          <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
+          <form id="login-form" onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
             <FormField
               control={loginForm.control}
               name="email"
@@ -123,10 +123,10 @@ export default function LoginPage() {
   const renderSignup = () => (
      <>
       <div className="flex flex-col items-center mb-8">
-        <Image src="https://storage.googleapis.com/aai-web-samples/logo-green-alt.png" alt="Campus Hub Logo" width={100} height={100} />
+        <Image src="/images/logo.png" alt="Campus Hub Logo" width={100} height={100} />
       </div>
-      <h2 className="text-2xl font-bold text-center mb-2 text-foreground">Create your Account</h2>
-       <p className="text-muted-foreground text-center mb-6">Food, Printing, and the Lagoon in one app</p>
+      <h2 className="text-2xl font-bold text-center mb-2 text-foreground"></h2>
+       <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in one app</p>
       <FormContainer>
         <Form {...signupForm}>
           <form id="signup-form" onSubmit={signupForm.handleSubmit(onSignup)} className="space-y-4">
