@@ -10,7 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { AppContext } from '@/context/app-context';
 import { Eye, EyeOff } from 'lucide-react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { AppLogo } from '@/components/ui/applogo';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address.' }),
@@ -21,7 +21,6 @@ const signupSchema = z.object({
   username: z.string().min(2, { message: 'Username must be at least 2 characters.' }),
   email: z.string().email({ message: 'Invalid email address.' }),
   password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
-  occupation: z.string(),
 });
 
 type View = 'login' | 'signup';
@@ -38,7 +37,7 @@ export default function LoginPage() {
 
   const signupForm = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
-    defaultValues: { username: '', email: '', password: '', occupation: 'student' },
+    defaultValues: { username: '', email: '', password: '' },
   });
 
   function onLogin(values: z.infer<typeof loginSchema>) {
@@ -58,9 +57,8 @@ export default function LoginPage() {
   const renderLogin = () => (
     <>
       <div className="flex flex-col items-center mb-8">
-        <Image src="https://placehold.co/150x150.png" alt="1agoon Logo" width={100} height={100} data-ai-hint="logo" />
+        <AppLogo/>
       </div>
-      <h2 className="text-2xl font-bold text-center mb-2 text-foreground"></h2>
       <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in <span className="text-primary font-bold">one</span> app</p>
       <FormContainer>
         <Form {...loginForm}>
@@ -125,9 +123,8 @@ export default function LoginPage() {
   const renderSignup = () => (
      <>
       <div className="flex flex-col items-center mb-8">
-        <Image src="https://placehold.co/150x150.png" alt="1agoon Logo" width={100} height={100} data-ai-hint="logo" />
+      <AppLogo/>
       </div>
-      <h2 className="text-2xl font-bold text-center mb-2 text-foreground"></h2>
        <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in <span className="text-primary font-bold">one</span> app</p>
       <FormContainer>
         <Form {...signupForm}>
@@ -187,28 +184,6 @@ export default function LoginPage() {
                     </FormItem>
                 )}
                 />
-            <FormField
-              control={signupForm.control}
-              name="occupation"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Occupation</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger className="bg-background text-foreground rounded-full h-12 px-5 border-border">
-                        <SelectValue placeholder="Select an occupation" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="student">Student</SelectItem>
-                      <SelectItem value="faculty">Faculty</SelectItem>
-                      <SelectItem value="staff">Staff</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
           </form>
         </Form>
       </FormContainer>
