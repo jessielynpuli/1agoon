@@ -2,6 +2,7 @@
 
 import React, { useContext, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { Home, Package, User, LayoutDashboard, Building, Loader2, LogOut } from 'lucide-react';
 import { AppContext } from '@/context/app-context';
@@ -47,8 +48,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   const SidebarNav = () => (
     <aside className="hidden md:flex flex-col w-64 border-r bg-card p-4">
       <div className="flex items-center gap-3 mb-8 px-2">
-        <Building className="h-8 w-8 text-primary" />
-        <h1 className="text-2xl font-bold font-headline text-primary tracking-wider">lagoon</h1>
+         <Image src="https://storage.googleapis.com/aai-web-samples/lagoon-logo.png" alt="Lagoon Logo" width={150} height={150} />
       </div>
       <nav className="flex flex-col gap-1">
         {navItems.map((item) => {

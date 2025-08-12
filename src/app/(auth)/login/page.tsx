@@ -4,11 +4,12 @@ import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { AppContext } from '@/context/app-context';
-import { Building, Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address.' }),
@@ -24,9 +25,8 @@ const signupSchema = z.object({
 type View = 'login' | 'signup';
 
 const LagoonLogo = () => (
-    <div className="flex flex-col items-center mb-4">
-        <Building className="h-16 w-16 text-primary" />
-        <h1 className="text-5xl font-bold text-primary tracking-widest mt-2">lagoon</h1>
+    <div className="flex flex-col items-center mb-8">
+        <Image src="https://storage.googleapis.com/aai-web-samples/lagoon-logo.png" alt="Lagoon Logo" width={200} height={200} />
     </div>
 );
 
@@ -63,7 +63,7 @@ export default function LoginPage() {
   const renderLogin = () => (
     <>
       <LagoonLogo />
-      <h2 className="text-xl text-center mb-6">Food, Printing, and the Lagoon in one app</h2>
+      <h2 className="text-xl text-center mb-6 text-primary">Food, Printing, and the Lagoon in one app</h2>
       <FormContainer>
         <Form {...loginForm}>
           <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
@@ -115,7 +115,7 @@ export default function LoginPage() {
           </form>
         </Form>
       </FormContainer>
-      <p className="text-center mt-6">
+      <p className="text-center mt-6 text-primary">
         First time here?{' '}
         <Button variant="link" className="p-0 h-auto text-primary font-semibold" onClick={() => setView('signup')}>
           Sign up
@@ -127,7 +127,7 @@ export default function LoginPage() {
   const renderSignup = () => (
      <>
       <LagoonLogo />
-      <h2 className="text-xl text-center mb-6">Food, Printing, and the Lagoon in one app</h2>
+      <h2 className="text-xl text-center mb-6 text-primary">Food, Printing, and the Lagoon in one app</h2>
       <FormContainer>
         <Form {...signupForm}>
           <form onSubmit={signupForm.handleSubmit(onSignup)} className="space-y-4">
@@ -192,7 +192,7 @@ export default function LoginPage() {
           </form>
         </Form>
         </FormContainer>
-        <p className="text-center mt-6">
+        <p className="text-center mt-6 text-primary">
             Already have an account?{' '}
             <Button variant="link" className="p-0 h-auto text-primary font-semibold" onClick={() => setView('login')}>
             Log in
