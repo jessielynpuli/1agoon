@@ -1,6 +1,7 @@
 'use client';
 
 import { useContext, useState } from 'react';
+import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -9,7 +10,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { AppContext } from '@/context/app-context';
 import { Eye, EyeOff } from 'lucide-react';
-import { AppLogo } from '@/components/ui/applogo';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const loginSchema = z.object({
@@ -58,10 +58,13 @@ export default function LoginPage() {
   const renderLogin = () => (
     <>
       <div className="flex flex-col items-center mb-8">
-        <AppLogo />
+        <Image src="https://placehold.co/150x150.png" alt="1agoon Logo" width={100} height={100} data-ai-hint="logo" />
+        <span className="text-4xl font-bold tracking-[0.2em] text-primary mt-2">
+            1agoon
+        </span>
       </div>
       <h2 className="text-2xl font-bold text-center mb-2 text-foreground"></h2>
-      <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in <span className="text-primary">one</span> app</p>
+      <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in <span className="text-primary font-bold">one</span> app</p>
       <FormContainer>
         <Form {...loginForm}>
           <form id="login-form" onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
@@ -125,10 +128,13 @@ export default function LoginPage() {
   const renderSignup = () => (
      <>
       <div className="flex flex-col items-center mb-8">
-        <AppLogo />
+        <Image src="https://placehold.co/150x150.png" alt="1agoon Logo" width={100} height={100} data-ai-hint="logo" />
+        <span className="text-4xl font-bold tracking-[0.2em] text-primary mt-2">
+            1agoon
+        </span>
       </div>
       <h2 className="text-2xl font-bold text-center mb-2 text-foreground"></h2>
-       <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in <span className="text-primary">one</span> app</p>
+       <p className="text-foreground text-center mb-6">Food, Printing, and the Lagoon in <span className="text-primary font-bold">one</span> app</p>
       <FormContainer>
         <Form {...signupForm}>
           <form id="signup-form" onSubmit={signupForm.handleSubmit(onSignup)} className="space-y-4">
