@@ -48,7 +48,7 @@ export default function LoginPage() {
   }
 
   const FormContainer = ({ children }: { children: React.ReactNode }) => (
-    <div className="bg-primary text-primary-foreground p-6 sm:p-8 rounded-2xl shadow-lg w-full">
+    <div className="bg-white text-foreground p-6 sm:p-8 rounded-2xl shadow-lg w-full">
         {children}
     </div>
   )
@@ -56,9 +56,10 @@ export default function LoginPage() {
   const renderLogin = () => (
     <>
       <div className="flex flex-col items-center mb-8">
-        <Image src="https://storage.googleapis.com/aai-web-samples/logo.png" alt="Lagoon Logo" width={200} height={200} />
+        <Image src="https://storage.googleapis.com/aai-web-samples/logo-green.png" alt="Lagoon Logo" width={100} height={100} />
       </div>
-      <h2 className="text-xl text-center mb-6 text-primary">Food, Printing, and the Lagoon in one app</h2>
+      <h2 className="text-2xl font-bold text-center mb-2 text-foreground">Welcome Back!</h2>
+      <p className="text-muted-foreground text-center mb-6">Log in to continue to your account.</p>
       <FormContainer>
         <Form {...loginForm}>
           <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
@@ -69,7 +70,7 @@ export default function LoginPage() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="you@example.com" {...field} className="bg-white text-foreground rounded-full h-12 px-5" />
+                    <Input placeholder="you@example.com" {...field} className="bg-secondary text-foreground rounded-full h-12 px-5" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -87,7 +88,7 @@ export default function LoginPage() {
                             type={passwordVisible ? "text" : "password"}
                             placeholder="••••••••"
                             {...field}
-                            className="bg-white text-foreground rounded-full h-12 px-5 pr-12"
+                            className="bg-secondary text-foreground rounded-full h-12 px-5 pr-12"
                         />
                         </FormControl>
                         <Button
@@ -104,13 +105,13 @@ export default function LoginPage() {
                     </FormItem>
                 )}
                 />
-            <Button type="submit" size="lg" className="w-full !mt-6 bg-primary-foreground text-primary hover:bg-white/90 rounded-full h-12 text-base font-bold">
+            <Button type="submit" size="lg" className="w-full !mt-6 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full h-12 text-base font-bold">
               Continue
             </Button>
           </form>
         </Form>
       </FormContainer>
-      <p className="text-center mt-6 text-primary">
+      <p className="text-center mt-6 text-muted-foreground">
         First time here?{' '}
         <Button variant="link" className="p-0 h-auto text-primary font-semibold" onClick={() => setView('signup')}>
           Sign up
@@ -122,9 +123,10 @@ export default function LoginPage() {
   const renderSignup = () => (
      <>
       <div className="flex flex-col items-center mb-8">
-        <Image src="https://storage.googleapis.com/aai-web-samples/logo.png" alt="Lagoon Logo" width={200} height={200} />
+        <Image src="https://storage.googleapis.com/aai-web-samples/logo-green.png" alt="Lagoon Logo" width={100} height={100} />
       </div>
-      <h2 className="text-xl text-center mb-6 text-primary">Food, Printing, and the Lagoon in one app</h2>
+      <h2 className="text-2xl font-bold text-center mb-2 text-foreground">Create your Account</h2>
+       <p className="text-muted-foreground text-center mb-6">Join us and get started.</p>
       <FormContainer>
         <Form {...signupForm}>
           <form onSubmit={signupForm.handleSubmit(onSignup)} className="space-y-4">
@@ -135,7 +137,7 @@ export default function LoginPage() {
                     <FormItem>
                     <FormLabel>Username</FormLabel>
                     <FormControl>
-                        <Input placeholder="your_username" {...field} className="bg-white text-foreground rounded-full h-12 px-5" />
+                        <Input placeholder="your_username" {...field} className="bg-secondary text-foreground rounded-full h-12 px-5" />
                     </FormControl>
                     <FormMessage />
                     </FormItem>
@@ -148,7 +150,7 @@ export default function LoginPage() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="you@example.com" {...field} className="bg-white text-foreground rounded-full h-12 px-5"/>
+                    <Input placeholder="you@example.com" {...field} className="bg-secondary text-foreground rounded-full h-12 px-5"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -166,7 +168,7 @@ export default function LoginPage() {
                             type={passwordVisible ? "text" : "password"}
                             placeholder="••••••••"
                             {...field}
-                            className="bg-white text-foreground rounded-full h-12 px-5 pr-12"
+                            className="bg-secondary text-foreground rounded-full h-12 px-5 pr-12"
                         />
                         </FormControl>
                         <Button
@@ -183,13 +185,13 @@ export default function LoginPage() {
                     </FormItem>
                 )}
                 />
-            <Button type="submit" size="lg" className="w-full !mt-6 bg-primary-foreground text-primary hover:bg-white/90 rounded-full h-12 text-base font-bold">
-              Continue
+            <Button type="submit" size="lg" className="w-full !mt-6 bg-primary text-primary-foreground hover:bg-primary/90 rounded-full h-12 text-base font-bold">
+              Sign Up
             </Button>
           </form>
         </Form>
         </FormContainer>
-        <p className="text-center mt-6 text-primary">
+        <p className="text-center mt-6 text-muted-foreground">
             Already have an account?{' '}
             <Button variant="link" className="p-0 h-auto text-primary font-semibold" onClick={() => setView('login')}>
             Log in
@@ -199,7 +201,7 @@ export default function LoginPage() {
   );
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12">
+    <div className="flex min-h-screen items-center justify-center bg-secondary px-4 py-12">
       <div className="w-full max-w-sm">
         {view === 'login' ? renderLogin() : renderSignup()}
       </div>
