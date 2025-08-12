@@ -36,7 +36,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
 
   if (!context || !context.isLoggedIn || !context.user) {
     return (
-      <div className="flex h-screen w-full items-center justify-center">
+      <div className="flex h-screen w-full items-center justify-center bg-background">
         <Loader2 className="h-10 w-10 animate-spin text-primary" />
       </div>
     );
@@ -46,16 +46,16 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   const navItems = role === 'buyer' ? buyerNavItems : vendorNavItems;
 
   const SidebarNav = () => (
-    <aside className="hidden md:flex flex-col w-64 border-r bg-card p-4">
+    <aside className="hidden md:flex flex-col w-64 bg-card p-4 border-r border-border">
       <div className="flex items-center gap-3 mb-8 px-2">
-         <Image src="https://storage.googleapis.com/aai-web-samples/lagoon-logo.png" alt="Lagoon Logo" width={150} height={150} />
+         <Image src="https://storage.googleapis.com/aai-web-samples/logo-green.png" alt="Campus Hub Logo" width={150} height={150} />
       </div>
       <nav className="flex flex-col gap-1">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link key={item.href} href={item.href} passHref>
-              <Button variant={isActive ? 'secondary' : 'ghost'} className="w-full justify-start text-base h-11 gap-3 px-3">
+              <Button variant={isActive ? 'secondary' : 'ghost'} className="w-full justify-start text-base h-11 gap-3 px-3 rounded-full">
                 <item.icon className="h-5 w-5" />
                 <span>{item.label}</span>
               </Button>
@@ -66,7 +66,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       <div className="mt-auto">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="w-full justify-start gap-3 h-auto py-2 px-2 text-left">
+            <Button variant="ghost" className="w-full justify-start gap-3 h-auto py-2 px-2 text-left rounded-full">
               <Avatar className="h-10 w-10">
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback>{user.name.charAt(0).toUpperCase()}</AvatarFallback>
@@ -96,10 +96,10 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   );
 
   return (
-    <div className="md:flex min-h-screen">
+    <div className="md:flex min-h-screen bg-background">
       <SidebarNav />
       <div className="flex-1 flex flex-col">
-        <div className="flex-grow md:pb-0 pb-16">{children}</div>
+        <main className="flex-grow md:pb-0 pb-16">{children}</main>
         <BottomNav />
       </div>
     </div>
