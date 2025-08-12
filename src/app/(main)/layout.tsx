@@ -2,7 +2,6 @@
 
 import React, { useContext, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { Home, Package, User, LayoutDashboard, Building, Loader2, LogOut } from 'lucide-react';
 import { AppContext } from '@/context/app-context';
@@ -10,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import BottomNav from '@/components/bottom-nav';
+import { AppLogo } from '@/components/ui/applogo';
 
 const buyerNavItems = [
   { href: '/home', label: 'Home', icon: Home },
@@ -48,7 +48,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   const SidebarNav = () => (
     <aside className="hidden md:flex flex-col w-64 bg-card p-4 border-r border-border">
       <div className="flex items-center gap-3 mb-8 px-2">
-         <Image src="/images/logo.png" alt="Campus Hub Logo" width={150} height={150} />
+         <AppLogo className="h-20" />
       </div>
       <nav className="flex flex-col gap-1">
         {navItems.map((item) => {
