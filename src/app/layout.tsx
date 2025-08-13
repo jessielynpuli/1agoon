@@ -5,8 +5,8 @@ import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'Campus Hub',
-  description: 'Your one-stop campus solution',
+  title: '1agoon',
+  description: 'Food, Printing, and the Lagoon in one app',
 };
 
 export default function RootLayout({
