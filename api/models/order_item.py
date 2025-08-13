@@ -7,7 +7,7 @@ class OrderItem(BaseModel):
     store_id: UUID
     user_id: UUID
     order_id: UUID
-    menu_item_id: UUID
+    store_item_id: UUID
     attachment_url: Optional[str]  # URL for any attachment (e.g., receipt, ticket)
     quantity: int
     order_item_price: float  # Price of the item at the time of order

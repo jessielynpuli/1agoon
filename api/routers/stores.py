@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, Depends, status
 from api.utils.supabase import supabase
 from uuid import UUID
 from pydantic import BaseModel
@@ -7,6 +7,9 @@ from datetime import datetime
 from fastapi import Depends
 from api.utils.auth import get_current_user
 from api.models.store import Store, StoreCreate, StoreUpdate
+from api.models.store_item import StoreItem, StoreItemCreate, StoreItemUpdate
+from api.models.user import User  # Assuming you have a User model for authentication
+from api.models.store import StoreGetOrder
 import uuid
 
 router = APIRouter(prefix="/stores")
@@ -68,9 +71,12 @@ async def get_all_stores():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch store details: {str(e)}")
     
-@router.get("/store/owner", response_model=List[Store])
-def get_vendor_stores(user=Depends(get_current_user)):
+@router.get("/store/{owner_id}/{store_id}", response_model=List[Store])
+def get_vendor_stores(owner_id: str, store_id: str,user=Depends(get_current_user)):
     try:
+        if str(store["owner_id"]) != str(user["user_id"]):
+            raise HTTPException(status_code=403, detail="Not authorized")
+        
         response = (
             supabase.table("Stores")
             .select("*")
@@ -85,7 +91,7 @@ def get_vendor_stores(user=Depends(get_current_user)):
 @router.patch("/store/{owner_id}/{store_id}", response_model=Store)
 async def patchupdate_store(store_id: UUID, store_update: StoreUpdate, owner_id: UUID, user=Depends(get_current_user)):
         try:
-            #chech if the user owns the store
+            #check if the user owns the store
             if str(store["owner_id"]) != str(user["user_id"]):
                 raise HTTPException(status_code=403, detail="Not authorized")
             #check if it exists

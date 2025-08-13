@@ -12,3 +12,11 @@ class Order(BaseModel):
     ticket_url: Optional[str]
     receipt_url: Optional[str]
     created_at: str
+
+class OrderCreate(BaseModel):
+    pickup_time: str
+    total_price: float
+    items_list: list["OrderItem"]  # List of MenuItem IDs
+    ticket_url: Optional[str]
+    receipt_url: Optional[str]
+    created_at: str

@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
 from datetime import datetime
-from api.routers import users, stores, orders, menu
+from api.routers import users, stores, orders, items
 from api.utils import auth
 import os
 import boto3
@@ -29,5 +29,5 @@ s3 = boto3.client('s3')
 # app.include_router(auth.router)
 app.include_router(users.router)
 app.include_router(stores.router)
-app.include_router(menu.router)
+app.include_router(items.router)
 app.include_router(orders.router)
