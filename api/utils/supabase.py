@@ -1,17 +1,16 @@
-import os
 from supabase import create_client, Client
+import os
+from pathlib import Path
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
+env_path = Path(__file__).resolve().parent.parent.parent / ".env"
+load_dotenv(dotenv_path=env_path)
 
-SUPABASE_URL = os.getenv('SUPABASE_URL')
-SUPABASE_KEY = os.getenv('SUPABASE_KEY')
-# SUPABASE_JWT_SECRET = os.getenv('SUPABASE_JWT_SECRET')
-# SUPABASE_BUCKET = os.getenv('SUPABASE_BUCKET')
+supabase_url = os.getenv("SUPABASE_URL")
+supabase_key = os.getenv("SUPABASE_KEY")
+supabase_bucket = os.getenv("SUPABASE_BUCKET")
 
-if not all([SUPABASE_URL, SUPABASE_KEY]):
-    raise EnvironmentError("One or more Supabase environment variables are missing.")
+if not all([supabase_url, supabase_key, supabase_bucket]):
+    raise ValueError("Supabase environment variables are not set correctly.")
 
-# Initialize Supabase client
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+supabase: Client = create_client(supabase_url, supabase_key)

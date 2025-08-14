@@ -1,7 +1,8 @@
 from unittest import result
 from fastapi import APIRouter, HTTPException
-from models.user import UserCreate, UserLogIn
-from utils.supabase import supabase
+
+from api.models.user import UserCreate, UserLogIn
+from api.utils.supabase import supabase
 
 router = APIRouter(prefix="/auth")
 

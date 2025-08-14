@@ -4,8 +4,8 @@ from pydantic import BaseModel
 from typing import List
 from datetime import datetime
 
-from routers import auth  # Import routers here
-from utils import supabase
+from api.routers import auth, users, stores, orders, items
+from api.utils import supabase, auth
 
 import os
 import boto3
@@ -28,8 +28,9 @@ app.add_middleware(
 # s3 = boto3.client('s3')
 
 # Include routes
+
 app.include_router(auth.router)
-# app.include_router(users.router)
-# app.include_router(stores.router)
-# app.include_router(menu.router)
-# app.include_router(orders.router)
+app.include_router(users.router)
+app.include_router(stores.router)
+app.include_router(items.router)
+app.include_router(orders.router)
