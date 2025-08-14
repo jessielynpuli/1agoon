@@ -3,8 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
 from datetime import datetime
-from api.routers import users, stores, orders, items
-from api.utils import auth
+
+from api.routers import auth, users, stores, orders, items
+from api.utils import supabase, auth
+
 import os
 import boto3
 
@@ -14,19 +16,20 @@ app = FastAPI(title = "1agoon API", version = "1.0.0", description = "API for ma
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # if production, may endpoint na insspecify. Allow all origins, you can specify specific domains if needed
-    allow_credentials=True,
+    allow_credentials= True,
     allow_methods=["*"],  # Allow all methods (GET, POST, PUT, DELETE, etc.)
     allow_headers=["*"],  # Allow all headers
 )
 
 # AWS Configuration (set-up muna to, before models etc)
-S3_BUCKET = os.getenv("S3_BUCKET", "4avatars-sph-bucket")
+# S3_BUCKET = os.getenv("S3_BUCKET", "4avatars-sph-bucket")
 
 # Initialize AWS, uy boto3 pakuha ng sources natin from access keys (basta na set-up na yung naunang dalawa)
-s3 = boto3.client('s3')
+# s3 = boto3.client('s3')
 
 # Include routes
-# app.include_router(auth.router)
+
+app.include_router(auth.router)
 app.include_router(users.router)
 app.include_router(stores.router)
 app.include_router(items.router)

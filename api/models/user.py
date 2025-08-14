@@ -5,13 +5,16 @@ from uuid import UUID
 class User(BaseModel):
     user_id: UUID
     username: str
-    email: Optional[EmailStr]
-    is_vendor: bool
-    store_id: Optional[str]
+    is_vendor: bool = False
+    store_id: Optional[str] = None
     created_at: str
     updated_at: str
 
 class UserCreate(BaseModel):
+    email: EmailStr
+    password: str
     username: str
+
+class UserLogIn(BaseModel):
     email: EmailStr
     password: str

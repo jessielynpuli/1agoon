@@ -1,3 +1,7 @@
+mangum==0.17.0
+email-validator
+requests
+python-multipart==0.0.6
 annotated-types==0.7.0
 anyio==4.9.0
 boto3==1.39.11
@@ -37,3 +41,4 @@ typing_extensions==4.14.1
 urllib3==2.5.0
 uvicorn==0.35.0
 websockets==15.0.1
+>>>>>>> main
