@@ -40,13 +40,39 @@ export default function LoginPage() {
     defaultValues: { username: '', email: '', password: '' },
   });
 
-  function onLogin(values: z.infer<typeof loginSchema>) {
-    context?.login({ email: values.email, username: values.email.split('@')[0] });
+async function onLogin(values: z.infer<typeof loginSchema>) {
+  try {
+    const res = await fetch('http://localhost:8000/auth/login', { // replace with lambda link
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(values),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || 'Login failed');
+    // Store the access token for future requests
+    localStorage.setItem('access_token', data.access_token);
+    alert('Login successful!');
+    // Optionally redirect or update context here
+  } catch (err: any) {
+    alert(err.message);
   }
+}
 
-  function onSignup(values: z.infer<typeof signupSchema>) {
-    context?.login({ email: values.email, username: values.username });
+async function onSignup(values: z.infer<typeof signupSchema>) {
+  try {
+    const res = await fetch('http://localhost:8000/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(values),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || 'Signup failed');
+    alert(data.message);
+    setView('login'); // Switch to login view after successful signup
+  } catch (err: any) {
+    alert(err.message);
   }
+}
 
   const FormContainer = ({ children }: { children: React.ReactNode }) => (
     <div className="bg-primary text-primary-foreground p-6 sm:p-8 rounded-3xl shadow-lg w-full">
