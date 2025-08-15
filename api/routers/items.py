@@ -32,7 +32,6 @@ def create_store_item(store_id: str, item: StoreItemCreate, user=Depends(get_cur
         "item_name": item.item_name,
         "price": item.price,
         "item_desc": item.item_desc,
-        "images_urls": item.images_urls,
         "created_at": timestamp,
         "updated_at": timestamp,
     }

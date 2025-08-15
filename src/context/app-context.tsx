@@ -2,8 +2,11 @@
 
 import React, { createContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import { supabase } from  '@/lib/supabaseClient'; // Adjust the import based on your project structure
 
 type User = {
+  id?: string;
+  ownerId?: string; // Optional for stores
   name: string;
   email: string;
   username: string;
@@ -16,7 +19,9 @@ interface AppContextType {
   isLoggedIn: boolean;
   user: User | null;
   role: Role;
-  login: (user: Omit<User, 'avatar' | 'name'>) => void;
+  id?: string;
+  storeId?: string;
+  login: (user: Omit<User,'id' | 'avatar' | 'name'>) => void;
   logout: () => void;
   setRole: (role: Role) => void;
 }
@@ -46,8 +51,11 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const login = useCallback((userData: Omit<User, 'avatar' | 'name'>) => {
+  const login = useCallback((userData: Omit<User, 'id' | 'avatar' | 'name'>) => {
     const fullUser = {
+        //id: userData.ownerId,
+        ownerId: userData.ownerId || '',
+        //storeId: userData.ownerId,
         name: userData.username,
         username: userData.username,
         email: userData.email,
@@ -74,7 +82,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     sessionStorage.setItem('role', newRole);
   }, []);
 
-  const value = { isLoggedIn, user, role, login, logout, setRole: handleSetRole };
+  const value = { isLoggedIn, user, role, storeId: user?.id, login, logout, setRole: handleSetRole };
 
   // Render children only after session storage has been checked.
   // This prevents hydration mismatches and content flashing.

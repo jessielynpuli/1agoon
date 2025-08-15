@@ -6,8 +6,46 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-type OrderStatus = 'received' | 'processing' | 'complete' | 'for-pickup';
+type OrderStatus = 'pending'|'received' | 'processing' | 'complete' | 'for-pickup';
 
+//router = APIRouter(prefix="/orders")
+
+const createOrder = async (orderId: string, userId: string, storeId: string, orderData: any) => 
+{
+	const res = await fetch('http://localhost:8000/orders/',
+	{
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/json'},
+  body: JSON.stringify(orderData),
+  });
+	if (!res.ok) throw new Error('Failed to create order');
+  return res.json();
+  };
+/*
+@router.get("/store/{store_id}", response_model=list[Order])
+get all orders for vendors
+
+@router.get("/", response_model=list[Order])
+get all orders for users
+
+#to get order items by order_id
+@router.get("/{order_id}/details", response_model=OrderResponse)
+
+# Endpoint to update order status
+@router.patch("/{order_id}/status")
+
+#for uploading attachments like pdf, photos, etc.
+@router.post("/orders/{order_id}/upload")
+*/
+
+
+
+
+
+
+
+/*
 const buyerOrders = [
   { id: 'ORD123', storeName: 'Siomai King', time: '10 mins ago', content: '2x Pork Siomai, 1x Gulaman', price: 95.00, status: 'processing' as OrderStatus },
   { id: 'ORD122', storeName: 'Quick Prints', time: '1 day ago', content: '10 pages b&w printing', price: 50.00, status: 'complete' as OrderStatus },
@@ -18,6 +56,7 @@ const vendorOrders = [
   { id: 'ORD124', customerName: 'Maria Clara', time: '15 mins ago', content: '4x Beef Siomai', price: 70.00, status: 'received' as OrderStatus },
   { id: 'ORD121', customerName: 'Crisostomo Ibarra', time: '45 mins ago', content: '1x Pork Siomai', price: 35.00, status: 'for-pickup' as OrderStatus },
 ];
+*/
 
 const statusConfig: Record<OrderStatus, { text: string; color: 'default' | 'secondary' | 'destructive' | 'outline' }> = {
     received: { text: "Received", color: "default" },
