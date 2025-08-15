@@ -22,27 +22,48 @@ const createOrder = async (orderId: string, userId: string, storeId: string, ord
 	if (!res.ok) throw new Error('Failed to create order');
   return res.json();
   };
-/*
-@router.get("/store/{store_id}", response_model=list[Order])
-get all orders for vendors
 
-@router.get("/", response_model=list[Order])
-get all orders for users
+const storeOrders = async (storeId: string) => {
+  const res = await fetch(`http://localhost:8000/orders/orders/store/${storeId}`);
+  if (!res.ok) throw new Error('Failed to fetch store orders');
+  return res.json();
+};
 
-#to get order items by order_id
-@router.get("/{order_id}/details", response_model=OrderResponse)
+const userOrders = async (storeId: string) => {
+  const res = await fetch(`http://localhost:8000/orders/`);
+  if (!res.ok) throw new Error('Failed to fetch user orders');
+  return res.json();
+};
 
-# Endpoint to update order status
-@router.patch("/{order_id}/status")
+const orderItems = async (order_id: string) => {
+  const res = await fetch(`http://localhost:8000/orders/orders/${order_id}/details`);
+  if (!res.ok) throw new Error('Failed to fetch user orders');
+  return res.json();
+};
 
-#for uploading attachments like pdf, photos, etc.
-@router.post("/orders/{order_id}/upload")
-*/
+const updateOrderStatus = async (updateData: any, order_id: string) => {
+  const res = await fetch(`http://localhost:8000/orders/orders/${order_id}/status`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updateData),
+  });
+  if (!res.ok) throw new Error('Failed to update item');
+  return res.json();
+};
 
-
-
-
-
+const uploadOrderAttachment = async (order_id: string, files: File[]) => 
+{
+	const formData = new FormData();
+  files.forEach(file => formData.append('images_urls', file));
+  const res = await fetch('http://localhost:8000/orders/orders/{order_id}/upload', {
+    method: 'POST',
+    body: formData,
+  });
+  if (!res.ok) throw new Error('Failed to upload attachments');
+  return res.json();
+};
 
 
 /*
@@ -59,6 +80,7 @@ const vendorOrders = [
 */
 
 const statusConfig: Record<OrderStatus, { text: string; color: 'default' | 'secondary' | 'destructive' | 'outline' }> = {
+    pending: { text: "Pending", color: "default"},  
     received: { text: "Received", color: "default" },
     processing: { text: "Processing", color: "secondary" },
     'for-pickup': { text: "For Pickup", color: "outline" },
@@ -111,7 +133,7 @@ const OrderCard = ({ order, role }: { order: any; role: 'buyer' | 'vendor' }) =>
 export default function OrdersPage() {
   const context = useContext(AppContext);
   const role = context?.role || 'buyer';
-  const orders = role === 'buyer' ? buyerOrders : vendorOrders;
+  const orders = role === 'buyer' ? userOrders : storeOrders;
   const title = role === 'buyer' ? 'Your Orders' : 'Incoming Orders';
 
   return (
