@@ -2,6 +2,8 @@ from pydantic import BaseModel
 from uuid import UUID
 from typing import Optional
 
+#add payment type, pick up time all strings
+
 class OrderItem(BaseModel):
     order_item_id: UUID
     store_id: UUID
@@ -17,6 +19,7 @@ class OrderItem(BaseModel):
     cancelled_by: Optional[UUID]  # User ID of the person who cancelled the order
     cancelled_reason: Optional[str]  # Reason for cancellation
     created_at: str  # Timestamp when the order item was created
+    updated_at: str  # Timestamp when the order item was last updated
 
 class OrderItemCreate(BaseModel):
     order_item_id: UUID

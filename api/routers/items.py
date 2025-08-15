@@ -18,7 +18,7 @@ from datetime import datetime
 
 router = APIRouter(prefix="/stores/items")
 
-
+# Endpoint to create a new store item
 @router.post("/store/{store_id}/item", response_model=StoreItemCreate)
 def create_store_item(store_id: str, item: StoreItemCreate, user=Depends(get_current_user)):
     item_id = str(uuid.uuid4())
@@ -42,7 +42,7 @@ def create_store_item(store_id: str, item: StoreItemCreate, user=Depends(get_cur
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to create store item: {str(e)}")   
 
-# UNDER CONSTRUCTION: This endpoint is for uploading images for store items, paantay, Wait for delete
+# Endpoint to upload images for store items
 @router.post("/store/upload_images", response_model=StoreItemCreate)
 async def upload_store_item_images(images_urls: List[UploadFile] = File(...)):
     uploaded_urls = []
@@ -58,6 +58,7 @@ async def upload_store_item_images(images_urls: List[UploadFile] = File(...)):
     
     return ImageUploadResponse(images_urls=uploaded_urls)
 
+# Endpoint to update a store item
 @router.patch("/store_item/{store_id}/{item_id}", response_model=StoreItem)
 async def patchupdate_store_item(store_id: str, item_id: str, item_update: StoreItemUpdate, user=Depends(get_current_user)):
     try:
@@ -93,7 +94,7 @@ async def patchupdate_store_item(store_id: str, item_id: str, item_update: Store
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to update store item: {str(e)}")   
            
-       
+# Endpoint to delete a store item    
 @router.delete("/store_item/{store_id}/{item_id}", response_model=StoreItem)
 async def delete_item(store_id: str, item_id: str, user=Depends(get_current_user)):
     try:

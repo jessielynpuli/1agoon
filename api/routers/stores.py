@@ -193,3 +193,199 @@ def update_store_status(store_id: str):
     supabase.table("Stores").update({"store_status": new_status}).eq("store_id", store_id).execute()
 
     return {"store_id": store_id, "store_status": new_status}
+
+
+
+@router.get("/reports/{store_id}")
+def get_store_report(store_id: UUID):
+    try:
+        now = datetime.utcnow()
+
+        # Date ranges
+        start_today = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        start_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        start_year = now.replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+
+        # Today’s orders
+        today_orders = supabase.table("Orders") \
+            .select("id,user_id,total_price") \
+            .eq("store_id", str(store_id)) \
+            .gte("created_at", start_today.isoformat()) \
+            .execute()
+
+        # Monthly orders
+        monthly_orders = supabase.table("Orders") \
+            .select("id,user_id,total_price") \
+            .eq("store_id", str(store_id)) \
+            .gte("created_at", start_month.isoformat()) \
+            .execute()
+
+        # Yearly orders
+        yearly_orders = supabase.table("Orders") \
+            .select("id,user_id,total_price") \
+            .eq("store_id", str(store_id)) \
+            .gte("created_at", start_year.isoformat()) \
+            .execute()
+
+        # Totals
+        def calc_totals(order_data):
+            orders_list = order_data.data or []
+            total_orders = len(orders_list)
+            total_customers = len(set(o["user_id"] for o in orders_list))
+            total_revenue = sum(o["total_price"] or 0 for o in orders_list)
+            return total_orders, total_customers, total_revenue
+
+        today_total_orders, today_total_customers, today_total_revenue = calc_totals(today_orders)
+        month_total_orders, month_total_customers, month_total_revenue = calc_totals(monthly_orders)
+        year_total_orders, year_total_customers, year_total_revenue = calc_totals(yearly_orders)
+
+        return {
+            "store_id": str(store_id),
+            "sales_summary": {
+                "today": {
+                    "orders": today_total_orders,
+                    "customers": today_total_customers,
+                    "revenue": today_total_revenue
+                },
+                "monthly": {
+                    "orders": month_total_orders,
+                    "customers": month_total_customers,
+                    "revenue": month_total_revenue
+                },
+                "yearly": {
+                    "orders": year_total_orders,
+                    "customers": year_total_customers,
+                    "revenue": year_total_revenue
+                }
+            }
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch store report: {str(e)}")
+
+@router.get("/stats/{store_id}")
+def get_store_stats(
+    store_id: UUID,
+    period: str = Query("daily", enum=["daily", "monthly", "yearly"])
+    ):
+    try:
+        now = datetime.utcnow()
+
+        if period == "daily":
+            start_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        elif period == "monthly":
+            start_date = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        else:  # yearly
+            start_date = now.replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+
+        # Fetch orders in the period
+        orders_data = supabase.table("Orders") \
+            .select("id,user_id") \
+            .eq("store_id", str(store_id)) \
+            .gte("created_at", start_date.isoformat()) \
+            .execute()
+
+        orders_list = orders_data.data or []
+
+        # Total orders
+        total_orders = len(orders_list)
+
+        # New customers = unique users who ordered for the first time in this period
+        unique_customers = set(o["user_id"] for o in orders_list)
+
+        new_customers = 0
+        for customer_id in unique_customers:
+            # Check if they had orders before start_date
+            prev_orders = supabase.table("Orders") \
+                .select("id") \
+                .eq("store_id", str(store_id)) \
+                .eq("user_id", customer_id) \
+                .lt("created_at", start_date.isoformat()) \
+                .execute()
+
+            if not prev_orders.data:
+                new_customers += 1
+
+        return {
+            "store_id": str(store_id),
+            "period": period,
+            "total_orders": total_orders,
+            "new_customers": new_customers
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch stats: {str(e)}")
+
+
+def get_time_slots():
+    return [
+        time(8, 0), time(10, 0), time(12, 0),
+        time(14, 0), time(16, 0), time(18, 0)
+    ]
+
+
+@router.get("/sales-overview/{store_id}")
+def sales_overview(store_id: UUID):
+    try:
+        now = datetime.utcnow()
+
+        start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        start_of_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        start_of_year = now.replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+
+        periods = {
+            "daily": start_of_day,
+            "monthly": start_of_month,
+            "annual": start_of_year
+        }
+
+        results = {}
+
+        for period_name, start_date in periods.items():
+            orders_data = supabase.table("Orders") \
+                .select("id, created_at, total_price, items_list") \
+                .eq("store_id", str(store_id)) \
+                .gte("created_at", start_date.isoformat()) \
+                .execute()
+
+            orders = orders_data.data or []
+
+            # --- 1. Sales by time slots (only for daily) ---
+            if period_name == "daily":
+                time_slots = get_time_slots()
+                slot_totals = {t.strftime("%I:%M%p"): 0.0 for t in time_slots}
+
+                for order in orders:
+                    order_time = datetime.fromisoformat(order["created_at"].replace("Z", "+00:00")).time()
+                    for slot in time_slots:
+                        if order_time < slot:
+                            slot_totals[slot.strftime("%I:%M%p")] += order["total_price"]
+                            break
+
+                results["daily_sales_by_time"] = slot_totals
+
+            # --- 2. Top selling items ---
+            item_stats = defaultdict(lambda: {"units": 0, "revenue": 0.0})
+            for order in orders:
+                for item in order.get("items_list", []):
+                    name = item.get("name")
+                    qty = item.get("quantity", 1)
+                    price = item.get("price", 0.0)
+                    item_stats[name]["units"] += qty
+                    item_stats[name]["revenue"] += qty * price
+
+            top_items = sorted(
+                item_stats.items(),
+                key=lambda x: x[1]["units"],
+                reverse=True
+            )[:5]
+
+            results[f"{period_name}_top_items"] = [
+                {"name": name, "units_sold": stats["units"], "revenue": stats["revenue"]}
+                for name, stats in top_items
+            ]
+
+        return results
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch sales overview: {str(e)}")
