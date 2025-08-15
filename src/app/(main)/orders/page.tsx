@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect} from 'react';
 import { AppContext } from '@/context/app-context';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -9,6 +9,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 type OrderStatus = 'pending'|'received' | 'processing' | 'complete' | 'for-pickup';
 
 //router = APIRouter(prefix="/orders")
+
+type Order = {
+  id: string;
+  storeName?: string;
+  customerName?: string;
+}
+
+
 
 const createOrder = async (orderId: string, userId: string, storeId: string, orderData: any) => 
 {
@@ -29,8 +37,8 @@ const storeOrders = async (storeId: string) => {
   return res.json();
 };
 
-const userOrders = async (storeId: string) => {
-  const res = await fetch(`http://localhost:8000/orders/`);
+const userOrders = async (user_id: string) => {
+  const res = await fetch(`http://localhost:8000/orders/${user_id}`);
   if (!res.ok) throw new Error('Failed to fetch user orders');
   return res.json();
 };
@@ -132,16 +140,46 @@ const OrderCard = ({ order, role }: { order: any; role: 'buyer' | 'vendor' }) =>
 
 export default function OrdersPage() {
   const context = useContext(AppContext);
+  if (!context){
+    return <div>Loading or no context available...</div>
+  }
+
   const role = context?.role || 'buyer';
-  const orders = role === 'buyer' ? userOrders : storeOrders;
+  //const orders = role === 'buyer' ? userOrders : storeOrders;
+  const [orders, setOrders] = useState<Order[]>([]);
   const title = role === 'buyer' ? 'Your Orders' : 'Incoming Orders';
+
+
+  useEffect(() => {
+  const fetchOrders = async () => {
+    try {
+      let fetchedOrders;
+      if (role == 'buyer') {
+        // Type guard: Check if context.id exists before using it
+        if (context.id) { 
+          fetchedOrders = await userOrders(context.id);
+        }
+      } else {
+        // Type guard: Check if context.storeId exists before using it
+        if (context.storeId) {
+          fetchedOrders = await storeOrders(context.storeId);
+        }
+      }
+      setOrders(fetchedOrders);
+    } catch (error) {
+      console.error('Failed to fetch orders:', error);
+    }
+  };
+
+  fetchOrders();
+}, [role, context]);
 
   return (
     <div className="p-4 md:p-8">
       <h1 className="text-3xl font-bold font-headline mb-6">{title}</h1>
       <div className="space-y-4">
         {orders.map((order) => (
-          <OrderCard key={order.id} order={order} role={role} />
+          <OrderCard key={order.id} order={orders} role={role} />
         ))}
       </div>
     </div>

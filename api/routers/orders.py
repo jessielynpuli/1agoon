@@ -88,7 +88,7 @@ def get_orders_for_store(store_id: str):
     return result.data
 
 #to get all orders for a user
-@router.get("/", response_model=list[Order])
+@router.get("/{user_id}", response_model=list[Order])
 def get_orders(user_id: str):
     result = supabase.table("Orders").select("*").eq("user_id", user_id).eq("status", "received").execute()
     orders = [Order(**order) for order in result.data]
