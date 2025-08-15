@@ -55,7 +55,7 @@ async function onLogin(values: z.infer<typeof loginSchema>) {
     
   context?.login({
     email: data.user.email, 
-    name: data.user.username
+    username: data.user.username
   });
 
 

@@ -26,8 +26,10 @@ export default function ProfilePage() {
       <Card className="max-w-lg mx-auto shadow-lg">
         <CardHeader className="items-center text-center">
           <Avatar className="w-24 h-24 mb-4">
-            <AvatarImage src={user.avatar} alt={user.name} />
-            <AvatarFallback className="text-3xl">{user.name.charAt(0).toUpperCase()}</AvatarFallback>
+            <AvatarImage src={user.avatar} alt={user.username} />
+            <AvatarFallback className="text-3xl">
+              {user?.name ? user.name.charAt(0).toUpperCase() : "?"}
+            </AvatarFallback>
           </Avatar>
           <CardTitle className="text-2xl font-headline">{user.name}</CardTitle>
           <CardDescription>{user.email}</CardDescription>

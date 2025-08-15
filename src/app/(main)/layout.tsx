@@ -69,7 +69,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="w-full justify-start gap-3 h-auto py-2 px-2 text-left rounded-full">
               <Avatar className="h-10 w-10">
-                <AvatarImage src={user.avatar} alt={user.name} />
+                <AvatarImage src={user.avatar} alt={user.username} />
                 <AvatarFallback>
                   {user?.username ? user.username.charAt(0).toUpperCase() : "?"}
                 </AvatarFallback>
