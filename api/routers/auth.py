@@ -44,7 +44,10 @@ def login(user: UserLogIn):
         
         return {
             "message": "Login successful",
-            "access_token": result.session.access_token
+            "access_token": result.session.access_token,
+            "user": {
+            "email": user.email,
+            }
         }
     except Exception as e:
         print("Login exception:", str(e))

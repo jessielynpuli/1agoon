@@ -4,8 +4,8 @@ from pydantic import BaseModel
 from typing import List
 from datetime import datetime
 
-from api.routers import auth, users, stores, orders, items
-from api.utils import supabase, auth
+from api.routers import auth
+from api.utils import supabase
 
 import os
 import boto3
@@ -30,7 +30,7 @@ app.add_middleware(
 # Include routes
 
 app.include_router(auth.router)
-app.include_router(users.router)
+""" app.include_router(users.router)
 app.include_router(stores.router)
 app.include_router(items.router)
-app.include_router(orders.router)
+app.include_router(orders.router) """
