@@ -53,10 +53,11 @@ async function onLogin(values: z.infer<typeof loginSchema>) {
     localStorage.setItem('access_token', data.access_token);
     alert('Login successful!');
     
-    context?.login({
-      email: data.user.email, 
-      username: data.user.username
-    });
+  context?.login({
+    email: data.user.email, 
+    name: data.user.username
+  });
+
 
   } catch (err: any) {
     alert(err.message);

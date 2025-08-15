@@ -70,7 +70,10 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
             <Button variant="ghost" className="w-full justify-start gap-3 h-auto py-2 px-2 text-left rounded-full">
               <Avatar className="h-10 w-10">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback>{user.name.charAt(0).toUpperCase()}</AvatarFallback>
+                <AvatarFallback>
+                  {user?.username ? user.username.charAt(0).toUpperCase() : "?"}
+                </AvatarFallback>
+                <span>{user?.username || "Guest"}</span>
               </Avatar>
               <div className="flex flex-col">
                 <span className="font-semibold text-sm">{user.name}</span>
