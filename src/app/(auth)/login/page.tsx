@@ -52,7 +52,12 @@ async function onLogin(values: z.infer<typeof loginSchema>) {
     // Store the access token for future requests
     localStorage.setItem('access_token', data.access_token);
     alert('Login successful!');
-    // Optionally redirect or update context here
+    
+    context?.login({
+      email: data.user.email,
+      username: data.user.username
+    });
+
   } catch (err: any) {
     alert(err.message);
   }
