@@ -41,12 +41,19 @@ def login(user: UserLogIn):
         })
 
         print("Login result:", result)
-        
+        # Get username from user metadata
+        username = None
+        if hasattr(result.user, "user_metadata"):
+            username = result.user.user_metadata.get("username")
+        if not username:
+            username = "guest"
+
         return {
             "message": "Login successful",
             "access_token": result.session.access_token,
             "user": {
-            "email": user.email,
+                "email": user.email,
+                "username": username
             }
         }
     except Exception as e:

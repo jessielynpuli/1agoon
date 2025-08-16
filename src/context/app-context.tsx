@@ -2,7 +2,7 @@
 
 import React, { createContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from  '@/lib/supabaseClient'; // Adjust the import based on your project structure
+// import { supabase } from  '@/lib/supabaseClient'; 
 
 type User = {
   id?: string;
