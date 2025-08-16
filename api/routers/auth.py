@@ -53,7 +53,8 @@ def login(user: UserLogIn):
             "access_token": result.session.access_token,
             "user": {
                 "email": user.email,
-                "username": username
+                "username": username,
+                "store_id": user.store_id
             }
         }
     except Exception as e:
