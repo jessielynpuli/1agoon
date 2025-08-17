@@ -5,11 +5,10 @@ import { useRouter } from 'next/navigation';
 // import { supabase } from  '@/lib/supabaseClient'; 
 
 type User = {
-  id?: string;
-  ownerId?: string; // Optional for stores
-  name: string;
+  id: string;
   email: string;
   username: string;
+  storeId?: string;
   avatar?: string;
 };
 
@@ -19,9 +18,7 @@ interface AppContextType {
   isLoggedIn: boolean;
   user: User | null;
   role: Role;
-  id?: string;
-  storeId?: string;
-  login: (user: Omit<User,'id' | 'avatar' | 'name'>) => void;
+  login: (user: User) => void;
   logout: () => void;
   setRole: (role: Role) => void;
 }
@@ -51,21 +48,22 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const login = useCallback((userData: Omit<User, 'id' | 'avatar' | 'name'>) => {
+  const login = useCallback((userData: User) => {
     const fullUser = {
-        //id: userData.ownerId,
-        ownerId: userData.ownerId || '',
-        //storeId: userData.ownerId,
-        name: userData.username,
-        username: userData.username,
-        email: userData.email,
-        avatar: `https://avatar.vercel.sh/${userData.email}.png`
+      ...userData,
+      avatar: userData.avatar || `https://avatar.vercel.sh/${userData.email}.png`
     };
+
     setUser(fullUser);
     setIsLoggedIn(true);
-    setRole('buyer'); 
+
+    // Default role → if storeId exists, assume vendor, else buyer
+    const initialRole: Role = fullUser.storeId ? 'vendor' : 'buyer';
+    setRole(initialRole);
+
     sessionStorage.setItem('user', JSON.stringify(fullUser));
-    sessionStorage.setItem('role', 'buyer');
+    sessionStorage.setItem('role', initialRole);
+    
     router.push('/home');
   }, [router]);
 
@@ -82,7 +80,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     sessionStorage.setItem('role', newRole);
   }, []);
 
-  const value = { isLoggedIn, user, role, storeId: user?.id, login, logout, setRole: handleSetRole };
+  const value = { isLoggedIn, user, role, login, logout, setRole: handleSetRole }
 
   // Render children only after session storage has been checked.
   // This prevents hydration mismatches and content flashing.

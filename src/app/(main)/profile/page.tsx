@@ -28,10 +28,10 @@ export default function ProfilePage() {
           <Avatar className="w-24 h-24 mb-4">
             <AvatarImage src={user.avatar} alt={user.username} />
             <AvatarFallback className="text-3xl">
-              {user?.name ? user.name.charAt(0).toUpperCase() : "?"}
+              {user?.username ? user.username.charAt(0).toUpperCase() : "?"}
             </AvatarFallback>
           </Avatar>
-          <CardTitle className="text-2xl font-headline">{user.name}</CardTitle>
+          <CardTitle className="text-2xl font-headline">{user.username}</CardTitle>
           <CardDescription>{user.email}</CardDescription>
         </CardHeader>
         <CardContent>
