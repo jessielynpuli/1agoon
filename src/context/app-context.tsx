@@ -80,7 +80,18 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     sessionStorage.setItem('role', newRole);
   }, []);
 
-  const value = { isLoggedIn, user, role, login, logout, setRole: handleSetRole }
+    const updateStoreId = useCallback((storeId: string) => {
+    if (!user) return;
+
+    const updatedUser = { ...user, storeId };
+    setUser(updatedUser);
+    setRole("vendor");
+
+    sessionStorage.setItem("user", JSON.stringify(updatedUser));
+    sessionStorage.setItem("role", "vendor");
+  }, [user]);
+
+  const value = { isLoggedIn, user, role, login, logout, setRole: handleSetRole, updateStoreId}
 
   // Render children only after session storage has been checked.
   // This prevents hydration mismatches and content flashing.

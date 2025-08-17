@@ -17,7 +17,7 @@ router = APIRouter(prefix="/stores")
 #for vendor to create, update, and get information about their stores
 #for users to get stores, make list!
 
-def is_store_open(opening: str, closing: str, days_open: list[str]) -> bool:
+""" def is_store_open(opening: str, closing: str, days_open: list[str]) -> bool:
     now = datetime.utcnow()
     current_time = now.strftime("%H:%M")
     current_day = now.strftime("%A")  # e.g. "Monday"
@@ -25,7 +25,7 @@ def is_store_open(opening: str, closing: str, days_open: list[str]) -> bool:
     return (
         current_day in days_open and
         opening <= current_time <= closing
-    )
+    ) """
 
 @router.post("/store", response_model=Store)
 def create_store(store: StoreCreate, user = Depends(get_current_user)):
@@ -55,7 +55,7 @@ def create_store(store: StoreCreate, user = Depends(get_current_user)):
         raise HTTPException(status_code=500, detail=f"Failed to create store: {str(e)}")
 
 
-@router.get("/store/all", response_model=List[Store])
+""" @router.get("/store/all", response_model=List[Store])
 async def get_all_stores():
     try:
         #may bucket for pictures ng menu, pls include
@@ -388,4 +388,4 @@ def sales_overview(store_id: UUID):
         return results
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to fetch sales overview: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to fetch sales overview: {str(e)}") """
